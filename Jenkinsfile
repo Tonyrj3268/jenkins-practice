@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label 'docker-agent'
-    }
+    
     stages {
         stage('Checkout') {
             steps {
@@ -9,17 +7,26 @@ pipeline {
             }
         }
         stage('Build') {
+            agent {
+                label 'npm-agent'
+            }
             steps {
                 sh 'npm install'
                 sh 'npx tsc'
             }
         }
         stage('Test') {
+            agent {
+                label 'npm-agent'
+            }
             steps {
                 sh 'npm test'
             }
         }
         stage('Docker Build & Push') {
+            agent {
+                label 'docker-agent'
+            }
             steps {
                 sh 'docker build -t chiachenglin/k8s-web-hello:latest .'
                 sh 'docker push chiachenglin/k8s-web-hello:latest'
