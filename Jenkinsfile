@@ -9,10 +9,12 @@ pipeline {
             }
         }
         stage('Build and Test') {
-            docker {
-                    image 'node:20'
-                    args '-v /var/run/docker.sock:/var/run/docker.sock' // 如需要 docker 指令
-                }
+            agent {
+                docker {
+                        image 'node:20'
+                        args '-v /var/run/docker.sock:/var/run/docker.sock' // 如需要 docker 指令
+                    }
+            }
             steps {
                 sh 'npm install'
                 sh 'npx tsc'
