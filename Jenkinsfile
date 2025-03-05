@@ -11,8 +11,7 @@ pipeline {
         stage('Build and Test') {
             agent {
                 docker {
-                        image 'node:20'
-                        args '-v /var/run/docker.sock:/var/run/docker.sock' // 如需要 docker 指令
+                        image 'node:20-alpine'
                     }
             }
             steps {
